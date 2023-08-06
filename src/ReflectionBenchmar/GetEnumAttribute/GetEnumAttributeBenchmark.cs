@@ -4,7 +4,7 @@ using BenchmarkDotNet.Jobs;
 namespace ReflectionBenchmark.GetEnumAttribute
 {
     [SimpleJob(RuntimeMoniker.Net70)]
-    public class GetCustomAttributeBenchmark
+    public class GetEnumAttributeBenchmark
     {
         [Params(1,100,1000,10000,50000,100000,500000)]
         public int Count;

@@ -1,4 +1,5 @@
 ﻿using BenchmarkDotNet.Running;
+using ReflectionBenchmark.GenericExport;
 using ReflectionBenchmark.GetEnumAttribute;
 
-BenchmarkRunner.Run<GetCustomAttributeBenchmark>();
+BenchmarkRunner.Run<GenericExportBenchmark>();
