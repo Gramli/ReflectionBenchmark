@@ -4,6 +4,8 @@ using BenchmarkDotNet.Jobs;
 namespace ReflectionBenchmark.GenericExport
 {
     [SimpleJob(RuntimeMoniker.Net70)]
+    [Orderer(BenchmarkDotNet.Order.SummaryOrderPolicy.FastestToSlowest)]
+    [MemoryDiagnoser]
     public class GenericExportBenchmark
     {
         public IEnumerable<GenericExportBenchmarkData> Data()
@@ -11,8 +13,9 @@ namespace ReflectionBenchmark.GenericExport
             yield return new GenericExportBenchmarkData(10);
             yield return new GenericExportBenchmarkData(100);
             yield return new GenericExportBenchmarkData(1000);
+            yield return new GenericExportBenchmarkData(5000);
             yield return new GenericExportBenchmarkData(10000);
-            yield return new GenericExportBenchmarkData(50000);
+            yield return new GenericExportBenchmarkData(25000);
         }
 
         [Benchmark]

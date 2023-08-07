@@ -4,9 +4,11 @@ using BenchmarkDotNet.Jobs;
 namespace ReflectionBenchmark.GetEnumAttribute
 {
     [SimpleJob(RuntimeMoniker.Net70)]
+    [Orderer(BenchmarkDotNet.Order.SummaryOrderPolicy.FastestToSlowest)]
+    [MemoryDiagnoser]
     public class GetEnumAttributeBenchmark
     {
-        [Params(1,100,1000,10000,50000,100000,500000)]
+        [Params(1,100,1000,5000,10000,25000)]
         public int Count;
 
         private CustomSmallEnum _smallEnumValue;
@@ -22,7 +24,7 @@ namespace ReflectionBenchmark.GetEnumAttribute
             _largeEnumValue = (CustomLargeEnum)new Random(42).Next(0, Enum.GetValues(typeof(CustomLargeEnum)).Length - 1);
         }
 
-        [Benchmark]
+        [Benchmark(Baseline = true)]
         public void CustomEnum()
         {
             for (var i = 0; i < Count; i++)
@@ -46,6 +48,32 @@ namespace ReflectionBenchmark.GetEnumAttribute
             for (var i = 0; i < Count; i++)
             {
                 _ = _smallEnumValue.GetCustomAttribute<CustomEnumAttribute>().Description;
+            }
+        }
+
+        public void CustomEnumMap()
+        {
+            for (var i = 0; i < Count; i++)
+            {
+                _ = CustomEnumDescriptionMap.Map[_enumValue];
+            }
+        }
+
+        [Benchmark]
+        public void CustomLargeEnumMap()
+        {
+            for (var i = 0; i < Count; i++)
+            {
+                _ = CustomEnumDescriptionMap.LargeMap[_largeEnumValue];
+            }
+        }
+
+        [Benchmark]
+        public void CustomSmallEnumMap()
+        {
+            for (var i = 0; i < Count; i++)
+            {
+                _ = CustomEnumDescriptionMap.SmallMap[_smallEnumValue];
             }
         }
     }

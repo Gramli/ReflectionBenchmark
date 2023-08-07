@@ -46,12 +46,8 @@ namespace ReflectionBenchmark.GenericExport
             var stringBuilder = new StringBuilder();
             for (var i  = 0; i < properties.Length; i++)
             {
-                var headerAttribute = properties[i].GetCustomAttribute<CsvHeaderAttribute>();
-
-                if (headerAttribute is null)
-                {
-                    throw new ArgumentNullException(nameof(CsvHeaderAttribute));
-                }
+                var headerAttribute = properties[i].GetCustomAttribute<CsvHeaderAttribute>()
+                    ?? throw new ArgumentNullException(nameof(CsvHeaderAttribute));
 
                 stringBuilder.Append(headerAttribute.Header);
 
