@@ -51,6 +51,7 @@ namespace ReflectionBenchmark.GetEnumAttribute
             }
         }
 
+        [Benchmark]
         public void CustomEnumMap()
         {
             for (var i = 0; i < Count; i++)
