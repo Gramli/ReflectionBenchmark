@@ -5,7 +5,7 @@ namespace ReflectionBenchmark.GenericExport
 {
     public static class GenericCsvExport
     {
-        public static string ExportToCsv<T>(this IEnumerable<T> items, string separator = ",") where T : class
+        public static string ExportToCsv<T>(this IEnumerable<T> items, string separator = ";") where T : class
         {
             if (items is null || !items.Any())
             {
@@ -59,8 +59,5 @@ namespace ReflectionBenchmark.GenericExport
 
             return stringBuilder.ToString();
         }
-
-        private static bool IsEnd(this Array array, int index)
-            => index == array.Length - 1;
     }
 }

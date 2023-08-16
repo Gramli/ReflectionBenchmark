@@ -1,5 +1,6 @@
 ﻿using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Jobs;
+using ReflectionBenchmark.GenericExport.CsvExport;
 
 namespace ReflectionBenchmark.GenericExport
 {
@@ -38,6 +39,28 @@ namespace ReflectionBenchmark.GenericExport
         public void CustomSmallItem(GenericExportBenchmarkData data)
         {
             var _ = data.SmallItems.ExportToCsv();
+        }
+
+        [Benchmark]
+        [ArgumentsSource(nameof(Data))]
+        public void CustomItemFast(GenericExportBenchmarkData data)
+        {
+
+            var _ = data.Items.ExportToCsvFast();
+        }
+
+        [Benchmark]
+        [ArgumentsSource(nameof(Data))]
+        public void CustomLargeItemFast(GenericExportBenchmarkData data)
+        {
+            var _ = data.LargeItems.ExportToCsvFast();
+        }
+
+        [Benchmark]
+        [ArgumentsSource(nameof(Data))]
+        public void CustomSmallItemFast(GenericExportBenchmarkData data)
+        {
+            var _ = data.SmallItems.ExportToCsvFast();
         }
     }
 }

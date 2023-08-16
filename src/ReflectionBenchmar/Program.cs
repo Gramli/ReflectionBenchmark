@@ -2,4 +2,4 @@
 using ReflectionBenchmark.GenericExport;
 using ReflectionBenchmark.GetEnumAttribute;
 
-BenchmarkRunner.Run<GetEnumAttributeBenchmark>();
+BenchmarkRunner.Run<GenericExportBenchmark>();
