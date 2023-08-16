@@ -55,10 +55,12 @@ To be able to compare with some fast solution I create static Dictionary -> Map 
 As we can see implementation with **Dictionary** is much faster and do not allocate memory when we try to get value by key, but it has to be edited every time we add a new item to Enum.
 **Reflection** is slower (but don't forger that we are still talking about nanoseconds so process 25K items takes 33 milliseconds) and allocate memory in consequence of which runs GC. In the case of 25k items it is a lot of garbage collections and allocated memory. On the other hand with relfection we don't care about Enum editing.
 
-**In my opinion and this case we can use reflection, but responsibly, for small portion of GetCustomAttribute calls is totally OK and we don't have to remember to edit our code every time we edit enum, but for a bunch of data, reflection is not sufficient because of memory allocations and garbage collections.**
+**In my opinion for this case we can use reflection, but responsibly, for small portion of GetCustomAttribute calls is totally OK and we don't have to remember to edit our code every time we edit enum, but for a bunch of data, reflection is not sufficient because of memory allocations and garbage collections.**
 
 
 # Measure Two - Export Data by Reflection
 Export to .csv, .xlsx, .ods file formats is standard for a lot of business applications and for that we can use generic export method with custom attribute representing header.
 
 ![Measure One - Get Enum Attribute](./doc/img/genericExport.png)
+
+# Measure Three
