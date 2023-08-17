@@ -22,26 +22,7 @@ namespace ReflectionBenchmark.GenericExport.CsvExport
 
             foreach (var item in items)
             {
-                result.AppendLine();
-                //TODO More appends instead of interpolation
-                var row = @$"{item.Item1}{separator}
-                    {item.Item2}{separator}
-                    {item.Item3}{separator}
-                    {item.Item4}{separator}
-                    {item.Item5}{separator}
-                    {item.Item6}{separator}
-                    {item.Item7}{separator}
-                    {item.Item8}{separator}
-                    {item.Item9}{separator}
-                    {item.Item10}{separator}
-                    {item.Item11}{separator}
-                    {item.Item12}{separator}
-                    {item.Item13}{separator}
-                    {item.Item14}{separator}
-                    {item.Item15}{separator}
-                    {item.Item16}{separator}";
-
-                result.Append(row);
+                result.AppendByProperty(item, separator);
             }
 
             return result.ToString();
@@ -61,6 +42,49 @@ namespace ReflectionBenchmark.GenericExport.CsvExport
             }
 
             return stringBuilder.ToString();
+        }
+
+        private static void AppendInterpolation(this StringBuilder stringBuilder, CustomItem item, string separator) 
+        {
+            stringBuilder.AppendLine();
+            var row = @$"{item.Item1}{separator}
+                    {item.Item2}{separator}
+                    {item.Item3}{separator}
+                    {item.Item4}{separator}
+                    {item.Item5}{separator}
+                    {item.Item6}{separator}
+                    {item.Item7}{separator}
+                    {item.Item8}{separator}
+                    {item.Item9}{separator}
+                    {item.Item10}{separator}
+                    {item.Item11}{separator}
+                    {item.Item12}{separator}
+                    {item.Item13}{separator}
+                    {item.Item14}{separator}
+                    {item.Item15}{separator}
+                    {item.Item16}{separator}";
+
+            stringBuilder.Append(row);
+        }
+
+        private static void AppendByProperty(this StringBuilder stringBuilder, CustomItem item, string separator)
+        {
+            stringBuilder.Append($"{item.Item1}{separator}");
+            stringBuilder.Append($"{item.Item2}{separator}");
+            stringBuilder.Append($"{item.Item3}{separator}");
+            stringBuilder.Append($"{item.Item4}{separator}");
+            stringBuilder.Append($"{item.Item5}{separator}");
+            stringBuilder.Append($"{item.Item6}{separator}");
+            stringBuilder.Append($"{item.Item7}{separator}");
+            stringBuilder.Append($"{item.Item8}{separator}");
+            stringBuilder.Append($"{item.Item9}{separator}");
+            stringBuilder.Append($"{item.Item10}{separator}");
+            stringBuilder.Append($"{item.Item11}{separator}");
+            stringBuilder.Append($"{item.Item12}{separator}");
+            stringBuilder.Append($"{item.Item13}{separator}");
+            stringBuilder.Append($"{item.Item14}{separator}");
+            stringBuilder.Append($"{item.Item15}{separator}");
+            stringBuilder.Append($"{item.Item16}{separator}");
         }
     }
 }

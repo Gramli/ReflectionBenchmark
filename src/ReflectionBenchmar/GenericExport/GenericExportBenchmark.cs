@@ -5,7 +5,7 @@ using ReflectionBenchmark.GenericExport.CsvExport;
 namespace ReflectionBenchmark.GenericExport
 {
     [SimpleJob(RuntimeMoniker.Net70)]
-    [Orderer(BenchmarkDotNet.Order.SummaryOrderPolicy.FastestToSlowest)]
+    [Orderer(BenchmarkDotNet.Order.SummaryOrderPolicy.Declared)]
     [MemoryDiagnoser]
     public class GenericExportBenchmark
     {
@@ -16,7 +16,14 @@ namespace ReflectionBenchmark.GenericExport
             yield return new GenericExportBenchmarkData(1000);
             yield return new GenericExportBenchmarkData(5000);
             yield return new GenericExportBenchmarkData(10000);
-            yield return new GenericExportBenchmarkData(25000);
+            //yield return new GenericExportBenchmarkData(25000);
+        }
+
+        [Benchmark]
+        [ArgumentsSource(nameof(Data))]
+        public void CustomSmallItem(GenericExportBenchmarkData data)
+        {
+            var _ = data.SmallItems.ExportToCsv();
         }
 
         [Benchmark]
@@ -36,9 +43,9 @@ namespace ReflectionBenchmark.GenericExport
 
         [Benchmark]
         [ArgumentsSource(nameof(Data))]
-        public void CustomSmallItem(GenericExportBenchmarkData data)
+        public void CustomSmallItemFast(GenericExportBenchmarkData data)
         {
-            var _ = data.SmallItems.ExportToCsv();
+            var _ = data.SmallItems.ExportToCsvFast();
         }
 
         [Benchmark]
@@ -54,13 +61,6 @@ namespace ReflectionBenchmark.GenericExport
         public void CustomLargeItemFast(GenericExportBenchmarkData data)
         {
             var _ = data.LargeItems.ExportToCsvFast();
-        }
-
-        [Benchmark]
-        [ArgumentsSource(nameof(Data))]
-        public void CustomSmallItemFast(GenericExportBenchmarkData data)
-        {
-            var _ = data.SmallItems.ExportToCsvFast();
         }
     }
 }

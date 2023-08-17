@@ -22,16 +22,7 @@ namespace ReflectionBenchmark.GenericExport.CsvExport
 
             foreach (var item in items)
             {
-                result.AppendLine();
-                var row = @$"{item.Item1}{separator}
-                    {item.Item2}{separator}
-                    {item.Item3}{separator}
-                    {item.Item4}{separator}
-                    {item.Item5}{separator}
-                    {item.Item6}{separator}
-                    {item.Item7}";
-
-                result.Append(row);
+                result.AppendByProperty(item, separator);
             }
 
             return result.ToString();
@@ -51,6 +42,31 @@ namespace ReflectionBenchmark.GenericExport.CsvExport
             }
 
             return stringBuilder.ToString();
+        }
+
+        private static void AppendInterpolation(this StringBuilder stringBuilder, CustomSmallItem item, string separator)
+        {
+            stringBuilder.AppendLine();
+            var row = @$"{item.Item1}{separator}
+                    {item.Item2}{separator}
+                    {item.Item3}{separator}
+                    {item.Item4}{separator}
+                    {item.Item5}{separator}
+                    {item.Item6}{separator}
+                    {item.Item7}{separator}";
+
+            stringBuilder.Append(row);
+        }
+
+        private static void AppendByProperty(this StringBuilder stringBuilder, CustomSmallItem item, string separator)
+        {
+            stringBuilder.Append($"{item.Item1}{separator}");
+            stringBuilder.Append($"{item.Item2}{separator}");
+            stringBuilder.Append($"{item.Item3}{separator}");
+            stringBuilder.Append($"{item.Item4}{separator}");
+            stringBuilder.Append($"{item.Item5}{separator}");
+            stringBuilder.Append($"{item.Item6}{separator}");
+            stringBuilder.Append($"{item.Item7}{separator}");
         }
     }
 }

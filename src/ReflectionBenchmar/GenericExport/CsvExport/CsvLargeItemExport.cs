@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using Microsoft.Diagnostics.Runtime.Utilities;
+using System.Text;
 
 namespace ReflectionBenchmark.GenericExport.CsvExport
 {
@@ -23,8 +24,32 @@ namespace ReflectionBenchmark.GenericExport.CsvExport
 
             foreach (var item in items)
             {
-                result.AppendLine();
-                var row = @$"{item.Item1}{separator}
+                result.AppendByProperty(item, separator);
+            }
+
+            return result.ToString();
+        }
+
+        private static string GetHeaders(string separator)
+        {
+            var stringBuilder = new StringBuilder();
+            for (var i = 0; i < Headers.Count; i++)
+            {
+                stringBuilder.Append(Headers[i]);
+
+                if (!Headers.IsEnd(i))
+                {
+                    stringBuilder.Append(separator);
+                }
+            }
+
+            return stringBuilder.ToString();
+        }
+
+        private static void AppendInterpolation(this StringBuilder stringBuilder, CustomLargeItem item, string separator)
+        {
+            stringBuilder.AppendLine();
+            var row = @$"{item.Item1}{separator}
                     {item.Item2}{separator}
                     {item.Item3}{separator}
                     {item.Item4}{separator}
@@ -57,26 +82,43 @@ namespace ReflectionBenchmark.GenericExport.CsvExport
                     {item.Item31}{separator}
                     {item.Item32}{separator}";
 
-                result.Append(row);
-            }
-
-            return result.ToString();
+            stringBuilder.Append(row);
         }
 
-        private static string GetHeaders(string separator)
+        private static void AppendByProperty(this StringBuilder stringBuilder, CustomLargeItem item, string separator)
         {
-            var stringBuilder = new StringBuilder();
-            for (var i = 0; i < Headers.Count; i++)
-            {
-                stringBuilder.Append(Headers[i]);
-
-                if (!Headers.IsEnd(i))
-                {
-                    stringBuilder.Append(separator);
-                }
-            }
-
-            return stringBuilder.ToString();
+            stringBuilder.Append($"{item.Item1}{separator}");
+            stringBuilder.Append($"{item.Item2}{separator}");
+            stringBuilder.Append($"{item.Item3}{separator}");
+            stringBuilder.Append($"{item.Item4}{separator}");
+            stringBuilder.Append($"{item.Item5}{separator}");
+            stringBuilder.Append($"{item.Item6}{separator}");
+            stringBuilder.Append($"{item.Item7}{separator}");
+            stringBuilder.Append($"{item.Item8}{separator}");
+            stringBuilder.Append($"{item.Item9}{separator}");
+            stringBuilder.Append($"{item.Item10}{separator}");
+            stringBuilder.Append($"{item.Item11}{separator}");
+            stringBuilder.Append($"{item.Item12}{separator}");
+            stringBuilder.Append($"{item.Item13}{separator}");
+            stringBuilder.Append($"{item.Item14}{separator}");
+            stringBuilder.Append($"{item.Item15}{separator}");
+            stringBuilder.Append($"{item.Item16}{separator}");
+            stringBuilder.Append($"{item.Item17}{separator}");
+            stringBuilder.Append($"{item.Item18}{separator}");
+            stringBuilder.Append($"{item.Item19}{separator}");
+            stringBuilder.Append($"{item.Item20}{separator}");
+            stringBuilder.Append($"{item.Item21}{separator}");
+            stringBuilder.Append($"{item.Item22}{separator}");
+            stringBuilder.Append($"{item.Item23}{separator}");
+            stringBuilder.Append($"{item.Item24}{separator}");
+            stringBuilder.Append($"{item.Item25}{separator}");
+            stringBuilder.Append($"{item.Item26}{separator}");
+            stringBuilder.Append($"{item.Item27}{separator}");
+            stringBuilder.Append($"{item.Item28}{separator}");
+            stringBuilder.Append($"{item.Item29}{separator}");
+            stringBuilder.Append($"{item.Item30}{separator}");
+            stringBuilder.Append($"{item.Item31}{separator}");
+            stringBuilder.Append($"{item.Item32}{separator}");
         }
     }
 }
