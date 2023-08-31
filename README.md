@@ -66,13 +66,13 @@ Benchmar show results of three classes with different sizes which are exported t
 * **CustomItem** with 16 properties
 * **CustomSmallItem** with 7 properties
 
-Implementation of our generic csv export is in GenericCsvExport.GenericCsvExport extension method. To be able to compare the generic export I created extension methods for every class which has headers prepared in list(CsvItemExport, CvLargeItemExport, CsvSmallItemExport).
+Implementation of our generic csv export is in GenericCsvExport.GenericCsvExport extension method. To be able to compare the generic export I created extension methods for every class which has headers prepared in collection (CsvItemExport, CvLargeItemExport, CsvSmallItemExport).
 
 ![Measure One - Get Enum Attribute](./doc/img/genericCSVExport.png)
 
 ### Summary
-The results show us that faster method is almost two times faster and alocates almost two times less memory, but let's not forget that execution time is in microseconds so for example export 10k large items by generic export takes 76.336406 miliseconds. 
+The results show us that faster method is almost twice faster and alocates almost twice less memory, but let's not forget that execution time is in microseconds so for example export 10k large items by generic export takes 76.336406 miliseconds. Although the faster method is twice better I think that reflection is still the solution for most cases because we do not have to edit our code every time we create a new class to export and we do not create duplicated our code.
 
-**In my opinion and in this case reflection solution is general, clean and totally sufficient.**
+**In my opinion and in this case the reflection method is general, clean and sufficient.**
 
 # Measure Three
