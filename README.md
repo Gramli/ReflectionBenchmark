@@ -75,4 +75,5 @@ The results show us that faster method is almost twice faster and alocates almos
 
 **In my opinion and in this case the reflection method is general, clean and sufficient.**
 
-# Measure Three
+# Measure Three - Create Instance of Class
+Even if we use IoC container which contains instance of our class, sometimes we need to create new instance of the class, typically with different parameters dedicated for specific scope. In that case we can use reflection.
