@@ -1,7 +1,8 @@
 # IN PROGRESS
 
 # ReflectionBenchmar
-Reflection is a very powerful tool for determining objects during run-time, but it takes performance. There is a widely held opinion throughout the community that reflection is bad and should not be used, but in my opinion there are a lot of business cases when the reflection is the cleanest and simplest solution, of course I am not talking about high performance applications where the performance is on the first place.
+Reflection is a very powerful tool for determining objects during run-time, but it takes performance. There is a widely held opinion throughout the community that reflection is bad and should not be used, yes it is slow, but is it realy problem? Except high performance applications we should always decide for solution which is simple, clean and easy to test and in some specific cases reflection is the solution.  
+Also reflection give us power to write our piece of code generic, so we can reuse it.
 
 # Menu
 
@@ -55,7 +56,7 @@ To be able to compare with some fast solution I create static Dictionary -> Map 
 As we can see implementation with **Dictionary** is much faster and do not allocate memory when we try to get value by key, but it has to be edited every time we add a new item to Enum.
 **Reflection** is slower (but we are still talking about nanoseconds so process 25K items takes 33 milliseconds) and allocate memory in consequence of which runs GC. In the case of 25k items it is a lot of garbage collections and allocated memory. On the other hand with relfection we don't care about Enum editing.
 
-**In my opinion we can use reflection for this case, but responsibly, for small portion of GetCustomAttribute calls is totally OK and we don't have to remember to edit our code every time we edit enum, but for a bunch of data, reflection is not sufficient because of memory allocations and garbage collections.**
+**In this case reflection is insufficient for bunch of method calls, but till hundred of calls it seems totally OK and also our code is generic.**
 
 
 # Measure Two - Export Data by Reflection
@@ -71,9 +72,9 @@ Implementation of our generic csv export is in GenericCsvExport.GenericCsvExport
 ![Measure One - Get Enum Attribute](./doc/img/genericCSVExport.png)
 
 ### Summary
-The results show us that faster method is almost twice faster and alocates almost twice less memory, but let's not forget that execution time is in microseconds so for example export 10k large items by generic export takes 76.336406 miliseconds. Although the faster method is twice better I think that reflection is still the solution for most cases because we do not have to edit our code every time we create a new class to export and we do not create duplicated our code.
+The results show us that faster method is almost twice faster and alocates almost twice less memory, but let's not forget that execution time is in microseconds. Although the faster method is twice "better" I think that reflection is still the right solution.
 
-**In my opinion and in this case the reflection method is general, clean and sufficient.**
+**By the results of this case, I am definitely for reflection usage. The reflection method is generic, clean and sufficient.**
 
 # Measure Three - Create Instance of Class
-Even if we use IoC container which contains instance of our class, sometimes we need to create new instance of the class, typically with different parameters dedicated for specific scope. In that case we can use reflection.
+Even if we use IoC container which holds instance of our class, sometimes we need to create new instance of the class, typically with different parameters dedicated for specific scope. In that case we can use reflection.
