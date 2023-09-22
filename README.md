@@ -1,8 +1,7 @@
 # IN PROGRESS
 
 # ReflectionBenchmar
-Reflection is a very powerful tool for determining objects during run-time, but it takes performance. There is a widely held opinion throughout the community that reflection is bad and should not be used, yes it is slow, but is it realy problem? Except high performance applications we should always decide for solution which is simple, clean and easy to test and in some specific cases reflection is the solution.  
-Also reflection give us power to write our piece of code generic, so we can reuse it.
+Reflection is a very powerful tool for determining objects during run-time, but it takes performance. There is a widely held opinion throughout the community that reflection is bad and should not be used, yes it is slow, but is it realy problem? Except high performance applications we should always decide for solution which is simple, clean and easy to test and in some specific cases reflection is the solution. Also reflection give us power to write our piece of code generic, so we can reuse it.
 
 # Menu
 
@@ -54,7 +53,7 @@ To be able to compare with some fast solution I create static Dictionary -> Map 
 
 ### Summary
 As we can see implementation with **Dictionary** is much faster and do not allocate memory when we try to get value by key, but it has to be edited every time we add a new item to Enum.
-**Reflection** is slower (but we are still talking about nanoseconds so process 25K items takes 33 milliseconds) and allocate memory in consequence of which runs GC. In the case of 25k items it is a lot of garbage collections and allocated memory. On the other hand with relfection we don't care about Enum editing.
+**Reflection** is slower and allocate memory in consequence of which runs GC. In the case of 25k items it is a lot of garbage collections and allocated memory. On the other hand with relfection we don't care about Enum editing.
 
 **In this case reflection is insufficient for bunch of method calls, but till hundred of calls it seems totally OK and also our code is generic.**
 
