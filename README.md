@@ -5,6 +5,9 @@ Reflection is a very powerful tool for determining objects during run-time, but 
 
 * [Motivation](#motivation)
 * [Get Started](#get-started)
+* [Measure One - Get Enum Value Attribute](#measure-one-get-Enum-value-attribute)
+* [Measure Two - Export Data by Reflection](#measure-two-export-data-by-reflection)
+* [Measure Three - Create Instance of Class](#measure-three-create-instance-of-class)
 
 # Motivation
 
