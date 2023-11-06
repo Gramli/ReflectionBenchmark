@@ -13,7 +13,13 @@ Reflection is a very powerful tool for determining objects during run-time, but 
 I was curious how fast are some of my daily basis extension methods which use reflection.
 
 # Get Started
-Simply Start console app with **Release** configuration.
+Simply uncoment Benchmark you want to run and Start console app with **Release** configuration.
+
+```C#
+BenchmarkRunner.Run<CreateClassInstanceBenchmark>();
+//BenchmarkRunner.Run<GenericExportBenchmark>();
+//BenchmarkRunner.Run<GetEnumAttributeBenchmark>();
+```
 
 # Measure One - Get Enum Value Attribute
 Sometimes we need human explanation of enum values and one of the simplest solution is to use attribute. Reflection is nice way to extract attribut from enum value, so in this benchmark measure we can see results of extensions generic method which gets custom attribute from enum value.
@@ -68,12 +74,25 @@ Benchmar show results of three classes with different sizes which are exported t
 
 Implementation of our generic csv export is in GenericCsvExport.GenericCsvExport extension method. To be able to compare the generic export I created extension methods for every class which has headers prepared in collection (CsvItemExport, CvLargeItemExport, CsvSmallItemExport).
 
-![Measure One - Get Enum Attribute](./doc/img/genericCSVExport.png)
+![Measure Two - Export Data by Reflection](./doc/img/genericCSVExport.png)
 
 ### Summary
-The results show us that faster method is almost twice faster and alocates almost twice less memory, but let's not forget that execution time is in microseconds. Although the faster method is twice "better" I think that reflection is still the right solution.
+The results show us that the faster method is almost twice faster and alocates almost twice less memory, but let's not forget that execution time is in microseconds. Although the faster method is twice "better" I think that reflection is still the better solution.
 
-**By the results of this case, I am definitely for reflection usage. The reflection method is generic, clean and sufficient.**
+**By the results of this case, I am definitely for reflection usage. The reflection method is generic, clean and in most of cases sufficient.**
 
 # Measure Three - Create Instance of Class
 Even if we use IoC container which holds instance of our class, sometimes we need to create new instance of the class, typically with different parameters dedicated for specific scope. In that case we can use reflection.
+
+Benchmar show results of three methods:
+* CreateInstance - create instance using already builded ServiceProvider (fastest and preferable solution)
+* ActivatorCreateInstance_Interface - create instance of class by interface. We need to find interace implementation so we use GetTypeByInterfaceSingle extension method which serch through assembly types
+* ActivatorCreateInstance_Concrete - create instance of class by class type.
+
+
+![Measure Three - Create Instance of Class](./doc/img/createInstance.png)
+
+### Summary
+ActivatorCreateInstance_Concrete method fast enough agains CreateInstance, but we have to specify concrete class. ActivatorCreateInstance_Interface is more than 10 times slower (agains ActivatorCreateInstance_Concrete) but doesn't force us to edit this method every time we change implementation of an interface, it's generic.
+
+**Create instace by ServiceProvider is always preferable and cleanest solution because we create it at start point (of the application, request etc..). In the cases when we need create instance at "runtime" it depends, both  ActivatorCreateInstance_Concrete and ActivatorCreateInstance_Interface has it's pros and cons.**
