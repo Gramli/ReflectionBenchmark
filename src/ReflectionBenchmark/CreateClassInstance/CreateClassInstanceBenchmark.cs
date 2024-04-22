@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace ReflectionBenchmark.CreateClassInstance
 {
-    [SimpleJob(RuntimeMoniker.Net70)]
+    [SimpleJob(RuntimeMoniker.Net80)]
     [Orderer(BenchmarkDotNet.Order.SummaryOrderPolicy.FastestToSlowest)]
     [MemoryDiagnoser]
     public class CreateClassInstanceBenchmark
