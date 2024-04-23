@@ -1,29 +1,44 @@
-# ReflectionBenchmar
+# C# Benchmarks
+The primary aim of this repository is to benchmark common coding practices and patterns encountered in everyday C# development.
+
+* [General Benchmarks](#general-benchmarks)
+	* [Throwing Exceptions vs Result Pattern](#measure-one---throwing-exceptions-vs-result-pattern)
+* [Reflection Benchmarks](#reflection-benchmarks)
+	* [Get Enum Value Attribute](#get-Enum-value-attribute)
+	* [Export Data by Reflection](#export-data-by-reflection)
+	* [Create Instance of Class](#create-instance-of-class) 
+
+### Get Started
+Go to either the General Benchmarks or Reflection Benchmarks project and uncomment the benchmark you want to run in the program.cs file. Then, start the console app with the selected project and **Release** configuration..
+
+![Run Benchmark](./doc/img/runBenchmark.gif)
+
+## General Benchmarks
+
+* [Throwing Exceptions vs Result Pattern](#measure-one---throwing-exceptions-vs-result-pattern)
+
+
+## Throwing Exceptions vs Result Pattern
+In the realm of error handling and control flow in C# programming, developers often encounter the choice between two primary approaches: Throwing Exceptions and employing the Result Pattern. The Throwing Exceptions method relies on the standard exception mechanism to handle error conditions, while the Result Pattern entails returning a structured result object containing both the result of the operation and any potential error information. This benchmark measure aims to compare the performance of these two approaches.
+
+For the benchmark measure, I've created two handlers: [ResultHandler](https://github.com/Gramli/ReflectionBenchmark/blob/feature/throwOrResult/src/GeneralBenchmark/ExceptionsAndResult/ResultHandler.cs) and [ThrowExceptionHandler](https://github.com/Gramli/ReflectionBenchmark/blob/feature/throwOrResult/src/GeneralBenchmark/ExceptionsAndResult/ThrowExceptionHandler.cs). Both perform the same task but with different error handling mechanisms.
+
+![Throwing Exceptions vs Result Pattern](./doc/img/exceptionResult.png)
+
+#### Summary
+When examining the code, it's evident that the implementation with exception throwing appears much simpler and cleaner. However, I've observed numerous instances where exception throwing led to a cycle of catch and rethrow, resulting in spaghetti code. From the benchmark measure, it's apparent that this approach is also two or three times slower and allocates significantly more memory.
+
+On the other hand, the result pattern and its ```if(result.IsFailed)``` condition can be cumbersome to write, and the code may appear somewhat less readable. However, developers always know what to expect from the method's result and naturally, it boasts much better performance.
+
+## Reflection Benchmarks
 Reflection is a very powerful tool for determining objects during run-time, but it takes performance. There is a widely held opinion throughout the community that reflection is bad and should not be used, yes it is slow, but is it realy problem? Except high performance applications we should always decide for solution which is simple, clean and easy to test and in some specific cases reflection is the solution. Also reflection give us power to write our piece of code generic, so we can reuse it.
 
-# Menu
+* [Get Enum Value Attribute](#get-Enum-value-attribute)
+* [Export Data by Reflection](#export-data-by-reflection)
+* [Create Instance of Class](#create-instance-of-class)
 
-* [Motivation](#motivation)
-* [Get Started](#get-started)
-* [Measure One - Get Enum Value Attribute](#measure-one---get-Enum-value-attribute)
-* [Measure Two - Export Data by Reflection](#measure-two---export-data-by-reflection)
-* [Measure Three - Create Instance of Class](#measure-three---create-instance-of-class)
-
-# Motivation
-
-I was curious how fast are some of my daily basis extension methods which use reflection.
-
-# Get Started
-Simply uncoment Benchmark you want to run and Start console app with **Release** configuration.
-
-```C#
-BenchmarkRunner.Run<CreateClassInstanceBenchmark>();
-//BenchmarkRunner.Run<GenericExportBenchmark>();
-//BenchmarkRunner.Run<GetEnumAttributeBenchmark>();
-```
-
-# Measure One - Get Enum Value Attribute
-Sometimes we need human explanation of enum values and one of the simplest solution is to use attribute. Reflection is nice way to extract attribut from enum value, so in this benchmark measure we can see results of extensions generic method which gets custom attribute from enum value.
+## Get Enum Value Attribute
+Sometimes, we require human-readable explanations for enum values, and one of the simplest solutions is to use attributes. Reflection provides a convenient way to extract attributes from enum values. In this benchmark measure, we observe the performance of a generic method extension that retrieves custom attributes from enum values.
 
 ```C#
     public static class EnumExtensions
@@ -58,15 +73,15 @@ To be able to compare with some fast solution I create static Dictionary -> Map 
 
 ![Measure One - Get Enum Attribute](./doc/img/getEnumAttribute.png)
 
-### Summary
-As we can see implementation with **Dictionary** is much faster and do not allocate memory when we try to get value by key, but it has to be edited every time we add a new item to Enum.
-**Reflection** is slower and allocate memory in consequence of which runs GC. In the case of 25k items it is a lot of garbage collections and allocated memory. On the other hand with relfection we don't care about Enum editing.
+#### Summary
+Comparatively, the implementation with Dictionary shows significantly faster performance and avoids memory allocation when retrieving values by key. However, it requires manual editing every time a new item is added to the Enum.
+On the other hand, Reflection is slower and leads to memory allocation, resulting in frequent garbage collections and increased memory usage, especially evident with a large number of items such as 25k. Despite this, Reflection eliminates the need for Enum editing.
 
-**In this case reflection is insufficient for bunch of method calls, but till hundred of calls it seems totally OK and also our code is generic.**
+In scenarios with a high volume of method calls, Reflection may prove inadequate. However, for fewer calls, up to a hundred, it remains viable, particularly considering the generic nature of our code.
 
 
-# Measure Two - Export Data by Reflection
-Export to .csv, .xlsx, .ods file formats is standard for a lot of business applications. In this case we can use reflection in generic export method with custom attribute which representing header.
+## Export Data by Reflection
+Exporting data to .csv, .xlsx, and .ods file formats is standard in many business applications. In this scenario, we utilize reflection within a generic export method, leveraging custom attributes that represent headers.
 
 Benchmar show results of three classes with different sizes which are exported to csv file.
 * **CustomLargeItem** with 32 properties 
@@ -77,12 +92,12 @@ Implementation of our generic csv export is in GenericCsvExport.GenericCsvExport
 
 ![Measure Two - Export Data by Reflection](./doc/img/genericCSVExport.png)
 
-### Summary
-The results show us that the faster method is almost twice faster and alocates almost twice less memory, but let's not forget that execution time is in microseconds. Although the faster method is twice "better" I think that reflection is still the better solution.
+#### Summary
+The results indicate that the faster method performs nearly twice as fast and allocates almost half the memory. However, it's crucial to note that the execution time is measured in microseconds. Despite the apparent speed advantage of the faster method, reflection still stands out as the superior solution.
 
-**By the results of this case, I am definitely for reflection usage. The reflection method is generic, clean and in most of cases sufficient.**
+Reflection offers the advantage of dynamic and flexible behavior, making it more adaptable to changes and future enhancements. While the performance difference might seem significant in microsecond terms, the broader considerations of code maintainability and scalability often favor the versatility of reflection. Therefore, despite its slower performance in this specific benchmark, reflection remains the preferred choice for its long-term benefits.
 
-# Measure Three - Create Instance of Class
+## Create Instance of Class
 Even if we use IoC container which holds instance of our class, sometimes we need to create new instance of the class, typically with different parameters dedicated for specific scope. In that case we can use reflection.
 
 Benchmark show results of three methods:
@@ -93,7 +108,7 @@ Benchmark show results of three methods:
 
 ![Measure Three - Create Instance of Class](./doc/img/createInstance.png)
 
-### Summary
-ActivatorCreateInstance_Concrete method is fast enough agains CreateInstance, but we have to specify concrete class. ActivatorCreateInstance_Interface is more than 10 times slower (agains ActivatorCreateInstance_Concrete) but doesn't force us to edit this method every time we change implementation of an interface, it's generic.
+#### Summary
+The Activator.CreateInstance_Concrete method proves to be sufficiently fast when compared to CreateInstance, but it requires specifying a concrete class. On the other hand, Activator.CreateInstance_Interface is more than 10 times slower than Activator.CreateInstance_Concrete, yet it offers the advantage of being generic. This means it doesn't necessitate editing the method each time we change the implementation of an interface.
 
-**Create instace by ServiceProvider is always preferable and cleanest solution because we create it at a start point (of the application, request etc..). In the specific cases when we need to create an instance at the "runtime" it depends, both  ActivatorCreateInstance_Concrete and ActivatorCreateInstance_Interface has it's pros and cons.**
+Creating instances via the ServiceProvider is consistently the preferred and cleanest solution, as it's initiated at a defined starting point of the application or request. However, in specific cases where instance creation is required at runtime, the choice between Activator.CreateInstance_Concrete and Activator.CreateInstance_Interface depends on various factors, each with its own set of advantages and drawbacks.
