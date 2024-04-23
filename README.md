@@ -2,22 +2,20 @@
 The primary aim of this repository is to benchmark common coding practices and patterns encountered in everyday C# development.
 
 * [General Benchmarks](#general-benchmarks)
+	* [Throwing Exceptions vs Result Pattern](#measure-one---throwing-exceptions-vs-result-pattern)
 * [Reflection Benchmarks](#reflection-benchmarks)
+	* [Get Enum Value Attribute](#get-Enum-value-attribute)
+	* [Export Data by Reflection](#export-data-by-reflection)
+	* [Create Instance of Class](#create-instance-of-class) 
+
+### Get Started
+Go to either the General Benchmarks or Reflection Benchmarks project and uncomment the benchmark you want to run in the program.cs file. Then, start the console app with the selected project and **Release** configuration..
+
 
 ## General Benchmarks
 
-## Menu - General Benchmarks
-
-* [Get Started](#get-started-general-benchmarks)
 * [Throwing Exceptions vs Result Pattern](#measure-one---throwing-exceptions-vs-result-pattern)
 
-
-## Get Started - General Benchmarks
-Simply uncoment Benchmark you want to run and Start console app with **Release** configuration.
-
-```C#
-BenchmarkRunner.Run<ExceptionAndResultBenchmark>();
-```
 
 ## Throwing Exceptions vs Result Pattern
 In the realm of error handling and control flow in C# programming, developers often encounter the choice between two primary approaches: Throwing Exceptions and employing the Result Pattern. The Throwing Exceptions method relies on the standard exception mechanism to handle error conditions, while the Result Pattern entails returning a structured result object containing both the result of the operation and any potential error information. This benchmark measure aims to compare the performance of these two approaches.
@@ -27,22 +25,9 @@ In the realm of error handling and control flow in C# programming, developers of
 ## Reflection Benchmarks
 Reflection is a very powerful tool for determining objects during run-time, but it takes performance. There is a widely held opinion throughout the community that reflection is bad and should not be used, yes it is slow, but is it realy problem? Except high performance applications we should always decide for solution which is simple, clean and easy to test and in some specific cases reflection is the solution. Also reflection give us power to write our piece of code generic, so we can reuse it.
 
-## Menu - Reflection Benchmarks
-
-* [Get Started](#get-started-reflection-benchmark)
 * [Get Enum Value Attribute](#get-Enum-value-attribute)
 * [Export Data by Reflection](#export-data-by-reflection)
 * [Create Instance of Class](#create-instance-of-class)
-
-
-## Get Started - Reflection Benchmarks
-Simply uncoment Benchmark you want to run and Start console app with **Release** configuration.
-
-```C#
-BenchmarkRunner.Run<CreateClassInstanceBenchmark>();
-//BenchmarkRunner.Run<GenericExportBenchmark>();
-//BenchmarkRunner.Run<GetEnumAttributeBenchmark>();
-```
 
 ## Get Enum Value Attribute
 Sometimes, we require human-readable explanations for enum values, and one of the simplest solutions is to use attributes. Reflection provides a convenient way to extract attributes from enum values. In this benchmark measure, we observe the performance of a generic method extension that retrieves custom attributes from enum values.
