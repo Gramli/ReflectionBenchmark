@@ -21,7 +21,7 @@ Go to either the General Benchmarks or Reflection Benchmarks project and uncomme
 ## Throwing Exceptions vs Result Pattern
 In the realm of error handling and control flow in C# programming, developers often encounter the choice between two primary approaches: Throwing Exceptions and employing the Result Pattern. The Throwing Exceptions method relies on the standard exception mechanism to handle error conditions, while the Result Pattern entails returning a structured result object containing both the result of the operation and any potential error information. This benchmark measure aims to compare the performance of these two approaches.
 
-For the benchmark measure, I've created two handlers: [ResultHandler](https://github.com/Gramli/ReflectionBenchmark/blob/feature/throwOrResult/src/GeneralBenchmark/ExceptionsAndResult/ThrowExceptionHandler.cs) and [ThrowExceptionHandler](https://github.com/Gramli/ReflectionBenchmark/blob/feature/throwOrResult/src/GeneralBenchmark/ExceptionsAndResult/ThrowExceptionHandler.cs). Both perform the same task but with different error handling mechanisms.
+For the benchmark measure, I've created two handlers: [ResultHandler](https://github.com/Gramli/ReflectionBenchmark/blob/feature/throwOrResult/src/GeneralBenchmark/ExceptionsAndResult/ResultHandler.cs) and [ThrowExceptionHandler](https://github.com/Gramli/ReflectionBenchmark/blob/feature/throwOrResult/src/GeneralBenchmark/ExceptionsAndResult/ThrowExceptionHandler.cs). Both perform the same task but with different error handling mechanisms.
 
 ![Throwing Exceptions vs Result Pattern](./doc/img/exceptionResult.png)
 
