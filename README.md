@@ -11,6 +11,7 @@ The primary aim of this repository is to benchmark common coding practices and p
 ### Get Started
 Go to either the General Benchmarks or Reflection Benchmarks project and uncomment the benchmark you want to run in the program.cs file. Then, start the console app with the selected project and **Release** configuration..
 
+![Run Benchmark](./doc/img/runBenchmark.gif)
 
 ## General Benchmarks
 
@@ -20,7 +21,14 @@ Go to either the General Benchmarks or Reflection Benchmarks project and uncomme
 ## Throwing Exceptions vs Result Pattern
 In the realm of error handling and control flow in C# programming, developers often encounter the choice between two primary approaches: Throwing Exceptions and employing the Result Pattern. The Throwing Exceptions method relies on the standard exception mechanism to handle error conditions, while the Result Pattern entails returning a structured result object containing both the result of the operation and any potential error information. This benchmark measure aims to compare the performance of these two approaches.
 
+For the benchmark measure, I've created two handlers: [ResultHandler](https://github.com/Gramli/ReflectionBenchmark/blob/feature/throwOrResult/src/GeneralBenchmark/ExceptionsAndResult/ThrowExceptionHandler.cs) and [ThrowExceptionHandler](https://github.com/Gramli/ReflectionBenchmark/blob/feature/throwOrResult/src/GeneralBenchmark/ExceptionsAndResult/ThrowExceptionHandler.cs). Both perform the same task but with different error handling mechanisms.
+
 ![Throwing Exceptions vs Result Pattern](./doc/img/exceptionResult.png)
+
+#### Summary
+When examining the code, it's evident that the implementation with exception throwing appears much simpler and cleaner. However, I've observed numerous instances where exception throwing led to a cycle of catch and rethrow, resulting in spaghetti code. From the benchmark measure, it's apparent that this approach is also two or three times slower and allocates significantly more memory.
+
+On the other hand, the result pattern and its ```if(result.IsFailed)``` condition can be cumbersome to write, and the code may appear somewhat less readable. However, developers always know what to expect from the method's result and naturally, it boasts much better performance.
 
 ## Reflection Benchmarks
 Reflection is a very powerful tool for determining objects during run-time, but it takes performance. There is a widely held opinion throughout the community that reflection is bad and should not be used, yes it is slow, but is it realy problem? Except high performance applications we should always decide for solution which is simple, clean and easy to test and in some specific cases reflection is the solution. Also reflection give us power to write our piece of code generic, so we can reuse it.
