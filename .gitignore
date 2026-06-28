@@ -360,6 +360,9 @@ src/*/bazel-out
 src/*/node_modules
 src/*/npm-debug.log
 src/*/yarn-error.log
+src/*/.env
+src/*/.env.*
+!src/*/.env.example
 
 # IDEs and editors
 src/*/.idea/
@@ -391,4 +394,7 @@ src/*/__screenshots__/
 # System files
 src/*/.DS_Store
 src/*/Thumbs.db
+
+
+.chrome-agent-profile/
 
